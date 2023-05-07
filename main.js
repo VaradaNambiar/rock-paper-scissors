@@ -9,7 +9,6 @@ function getRandomValue(upper_limit) {
 function getComputerChoice() {
     let val = getRandomValue(2)
     const joined = 'value inside : ' + val
-    console.log(joined)
     switch (val) {
         case 0:
             return "rock";
@@ -26,7 +25,6 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    console.log('playRound()')
     switch (playerSelection.toLowerCase().trim()) {
         case "rock":
             {
@@ -70,33 +68,39 @@ function playRound(playerSelection, computerSelection) {
                         break;
                 }
             }
+        default:
+            return "Invalid input";
     }
 }
 
 function game(n_rounds) {
-    console.log("game()")
     let iterator = 0;
     let player_score = 0;
     let computer_score = 0;
-    let is_invalid_game = false;
 
     while (iterator < n_rounds) {
         let playerSelection = prompt("rock/paper/scissors");
+       
+        // when user selects 'Cancel' 
         if (playerSelection == null) {
-            is_invalid_game = true;
-            break;
+            if(iterator==0)
+                return "Canceled"
+            else
+                break;
         }
 
         let computerSelection = getComputerChoice();
         let result_string = playRound(playerSelection, computerSelection);
         let array = result_string.split("!")
-        console.log(array[0])
+
         switch (array[0]) {
             case "You Win":
                 player_score += 1;
                 break;
             case "You Loose":
                 computer_score += 1;
+                break;
+            case "Its a tie":
                 break;
             default:
                 return "Something went wrong!"
