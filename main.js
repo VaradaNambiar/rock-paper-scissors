@@ -24,94 +24,78 @@ function getComputerChoice() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    switch (playerSelection.toLowerCase().trim()) {
+function onScissors(opponent_selection){
+    let result=''
+    switch (opponent_selection.toLowerCase()) {
         case "rock":
-            {
-                switch (computerSelection.toLowerCase()) {
-                    case "rock":
-                        return "Its a tie!";
-                        break;
-                    case "paper":
-                        return "You Loose! Paper beats Rock";
-                        break;
-                    case "scissors":
-                        return "You Win! Rock beats Paper";
-                        break;
-                }
-            }
+            result = "You Loose! Rock beats Scissors";
+            break;
         case "paper":
-            {
-                switch (computerSelection.toLowerCase()) {
-                    case "rock":
-                        return "You Win! Paper breats Rock";
-                        break;
-                    case "paper":
-                        return "Its a tie!";
-                        break;
-                    case "scissors":
-                        return "You Loose! Scissors beats Paper";
-                        break;
-                }
-            }
+            result = "You Win! Scissors beats Paper";
+            break;
         case "scissors":
-            {
-                switch (computerSelection.toLowerCase()) {
-                    case "rock":
-                        return "You Loose! Rock beats Scissors";
-                        break;
-                    case "paper":
-                        return "You Win! Scissors beats Paper";
-                        break;
-                    case "scissors":
-                        return "Its a tie!"
-                        break;
-                }
-            }
-        default:
-            return "Invalid input";
+            result = "Its a tie!"
+            break;
     }
+    let result_para = document.querySelector('#result_statement')
+    result_para.textContent = result
 }
 
-function game(n_rounds) {
-    let iterator = 0;
-    let player_score = 0;
-    let computer_score = 0;
-
-    while (iterator < n_rounds) {
-        let playerSelection = prompt("rock/paper/scissors");
-       
-        // when user selects 'Cancel' 
-        if (playerSelection == null) {
-            if(iterator==0)
-                return "Canceled"
-            else
-                break;
-        }
-
-        let computerSelection = getComputerChoice();
-        let result_string = playRound(playerSelection, computerSelection);
-        let array = result_string.split("!")
-
-        switch (array[0]) {
-            case "You Win":
-                player_score += 1;
-                break;
-            case "You Loose":
-                computer_score += 1;
-                break;
-            case "Its a tie":
-                break;
-            default:
-                return "Something went wrong!"
-        }
-        ++iterator;
+function onPaper(opponent_selection){
+    let result=''
+    switch (opponent_selection.toLowerCase()) {
+        case "rock":
+            result = "You Win! Paper breats Rock";
+            break;
+        case "paper":
+            result = "Its a tie!";
+            break;
+        case "scissors":
+            result = "You Loose! Scissors beats Paper";
+            break;
     }
-    if (player_score > computer_score)
-        return "Congratulations! You Won";
-    else if (player_score < computer_score)
-        return "Sorry! You Lost";
-    else
-        return "Its a tie!";
+    let result_para = document.querySelector('#result_statement')
+    result_para.textContent = result
+
 }
+
+function onRock(opponent_selection){
+    let result = ''
+    switch (opponent_selection.toLowerCase()) {
+        case "rock":
+            result = "Its a tie!";
+            break;
+        case "paper":
+            result = "You Loose! Paper beats Rock";
+            break;
+        case "scissors":
+            result = "You Win! Rock beats Paper";
+            break;
+    }
+    let result_para = document.querySelector('#result_statement')
+    result_para.textContent = result
+
+}
+function playRound() {
+    console.log("in playRound")
+
+    let computerSelection = getComputerChoice()
+
+    let rock_button = document.querySelector('#rock_btn')
+    rock_button.addEventListener('click', onRock(computerSelection))
+
+    let paper_button = document.querySelector('#paper_btn')
+    paper_button.addEventListener('click', onPaper(computerSelection))
+
+    let scissors_button = document.querySelector('#scissors_btn')
+    scissors_button.addEventListener('click', onScissors(computerSelection))
+}
+
+let round_result = ""
+let result_para = document.querySelector('#result_statement')
+result_para.textContent = round_result
+
+let buttons = document.querySelectorAll('button')
+buttons.forEach((button) => {
+    button.addEventListener('click', playRound)})
 
