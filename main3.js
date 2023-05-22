@@ -66,7 +66,7 @@ function onPaper(opponent_selection) {
     let result = ''
     switch (opponent_selection.toLowerCase()) {
         case "rock":
-            result = "You Win! Paper breats Rock";
+            result = "You Win! Paper beats Rock";
             displayChoices('paper', 'rock')
             break;
         case "paper":
