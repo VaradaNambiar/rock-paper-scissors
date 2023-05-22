@@ -17,7 +17,6 @@ function getComputerChoice() {
 }
 
 function addScore() {
-    console.log("inside addScore()")
     let result_string = document.querySelector('#result_statement').innerText
     let array = result_string.split("!")
 
@@ -106,34 +105,34 @@ function playRound(event) {
 
     let computer_selection = getComputerChoice()
     let selection = event.target.id
-    console.log(selection.toLowerCase())
     let result = ''
-
-    switch (selection.toLowerCase()) {
-        case 'rock_btn':
-            result = onRock(computer_selection)
-            break
-        case 'paper_btn':
-            result = onPaper(computer_selection)
-            break
-        case 'scissors_btn':
-            result = onScissors(computer_selection)
-            break
-        default:
-            alert('Wrong button!')
-
-
-
+    if(current_round<number_of_rounds){
+        current_round+=1
+        switch (selection.toLowerCase()) {
+            case 'rock_btn':
+                result = onRock(computer_selection)
+                break
+            case 'paper_btn':
+                result = onPaper(computer_selection)
+                break
+            case 'scissors_btn':
+                result = onScissors(computer_selection)
+                break
+            default:
+                alert('Wrong button!')
+        }
+        let result_para = document.querySelector('#result_statement')
+        result_para.textContent = result
+        addScore()
+        displayScores()
     }
-    console.log(result)
-    let result_para = document.querySelector('#result_statement')
-    result_para.textContent = result
-    addScore()
-    displayScores()
-
+    else{
+        alert('start a new game')
+    }
 }
 
 function newGame() {
+    current_round = 0
     computer_score = 0
     player_score = 0
     number_of_rounds = prompt('Number of rounds to play')
@@ -150,17 +149,9 @@ function newGame() {
     result_para.textContent=''
 }
 
-function toggleChoiceButtons(disable) {
-    let choice_buttons = document.querySelectorAll('choices')
-    if (disable)
-        choice_buttons.forEach((button) => button.disabled = true)
-    else
-        choice_buttons.forEach((button) => button.disabled = false)
-}
 
 function playGame() {
     playRound()
-    toggleChoiceButtons(true) // not working
 }
 
 function displayChoices(user_choice, computer_choice) {
@@ -203,9 +194,9 @@ function displayChoices(user_choice, computer_choice) {
 }
 
 let number_of_rounds = 1
+let current_round =0
 let computer_score = 0
 let player_score = 0
-toggleChoiceButtons(true) // not working
 let buttons = document.querySelectorAll('button')
 buttons.forEach((button) => {
     if (button.id != 'new-game') {
@@ -216,6 +207,5 @@ buttons.forEach((button) => {
     else
         button.addEventListener('click', () => {
             newGame()
-            toggleChoiceButtons(false) // not working
         })
 })
