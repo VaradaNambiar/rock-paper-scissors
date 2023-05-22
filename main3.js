@@ -145,6 +145,9 @@ function newGame() {
         let parent_node = image.parentNode
         parent_node.removeChild(image)
     })
+
+    let result_para= document.querySelector('#result_statement')
+    result_para.textContent=''
 }
 
 function toggleChoiceButtons(disable) {
@@ -176,7 +179,7 @@ function displayChoices(user_choice, computer_choice) {
         default:
             alert('invalid selection!')
     }
-
+    user_selection_img.setAttribute('style','height:100px; width:auto')
     let user_selection_div = document.querySelector('#player_selection')
     user_selection_div.appendChild(user_selection_img)
 
@@ -195,6 +198,7 @@ function displayChoices(user_choice, computer_choice) {
         default:
             alert('invalid selection!')
     }
+    computer_selection_img.setAttribute('style','height:100px; width:auto')
     computer_selection_div.appendChild(computer_selection_img)
 }
 
